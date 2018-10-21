@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         mainwidget.cpp \
     popupwidgetbutton.cpp \
-    testpopupwidget.cpp
+    testpopupwidget.cpp \
+    shadowwidget.cpp
 
 HEADERS += \
         mainwidget.h \
     popupwidgetbutton.h \
-    testpopupwidget.h
+    testpopupwidget.h \
+    shadowwidget.h
 
 FORMS += \
         mainwidget.ui

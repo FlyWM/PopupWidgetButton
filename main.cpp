@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     MainWidget w;
     w.show();
     w.initPos();
+    w.resize(800, 600);
 
     return a.exec();
 }

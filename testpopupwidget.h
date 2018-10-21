@@ -27,6 +27,7 @@ protected:
 signals:
 
 public slots:
+
 };
 
 #endif // TESTPOPUPWIDGET_H

@@ -23,7 +23,7 @@ TestPopupWidget::TestPopupWidget(QWidget *parent)
 {
     QLabel *pLabel = new QLabel("This is a popup widget...", this);
     QHBoxLayout *pMainLayout = new QHBoxLayout(this);
-    pLabel->setStyleSheet("QLabel { color: white; }");
+    pLabel->setStyleSheet("QLabel { color: black; }");
 
     pMainLayout->addWidget(pLabel);
 }
