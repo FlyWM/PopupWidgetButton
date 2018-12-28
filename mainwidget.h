@@ -27,10 +27,8 @@ public:
     explicit MainWidget(QWidget *parent = 0);
     ~MainWidget();
 
-
 private:
     Ui::MainWidget *ui;
-    static QPoint m_pos;
 };
 
 #endif // MAINWIDGET_H
