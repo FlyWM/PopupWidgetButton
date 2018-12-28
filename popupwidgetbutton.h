@@ -29,7 +29,7 @@ class PopupWidgetButton : public QWidget
 {
     Q_OBJECT
 public:
-    explicit PopupWidgetButton(PWB::WidgetOrientation orien, QWidget *parent = nullptr);
+    explicit PopupWidgetButton(PWB::WidgetOrientation orien, QWidget *rootWindow, QWidget *parent = nullptr);
     ~PopupWidgetButton();
 
     /**
@@ -66,6 +66,7 @@ private:
     PWB::WidgetOrientation m_orien;
     PopupWidget *m_pMainWidget;
     bool m_mainWidgetClicked;
+    QWidget *m_pRootWindow;
     static QList<PopupWidget *> m_pWidgets;
 };
 

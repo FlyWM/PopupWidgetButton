@@ -27,12 +27,6 @@ public:
     explicit MainWidget(QWidget *parent = 0);
     ~MainWidget();
 
-    void initPos();
-
-    static QPoint getMainWidgetPos() { return m_pos; }
-
-protected:
-    virtual void moveEvent(QMoveEvent *e);
 
 private:
     Ui::MainWidget *ui;

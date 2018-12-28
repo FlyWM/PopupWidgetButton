@@ -23,13 +23,13 @@ MainWidget::MainWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    PopupWidgetButton *pBtn = new PopupWidgetButton(PWB::Vertical, this);
+    PopupWidgetButton *pBtn = new PopupWidgetButton(PWB::Vertical, this, this);
     pBtn->move(100, 250);
     TestPopupWidget *pWidget = new TestPopupWidget(this);
     pBtn->setMainWidget(pWidget);
     pBtn->button()->setText("Vertical");
 
-    PopupWidgetButton *pBtn1 = new PopupWidgetButton(PWB::Horizontal, this);
+    PopupWidgetButton *pBtn1 = new PopupWidgetButton(PWB::Horizontal, this, this);
     pBtn1->move(180, 250);
     TestPopupWidget *pWidget1 = new TestPopupWidget(this);
     pBtn1->setMainWidget(pWidget1);
@@ -39,14 +39,4 @@ MainWidget::MainWidget(QWidget *parent) :
 MainWidget::~MainWidget()
 {
     delete ui;
-}
-
-void MainWidget::initPos()
-{
-    m_pos = this->mapToGlobal(QPoint(0, 0));
-}
-
-void MainWidget::moveEvent(QMoveEvent *e)
-{
-    m_pos = e->pos();
 }

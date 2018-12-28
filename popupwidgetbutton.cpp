@@ -9,6 +9,7 @@
  * CSDN: https://blog.csdn.net/a844651990
  * Email: fwm17918@163.com
  */
+
 #include "popupwidgetbutton.h"
 #include "mainwidget.h"
 #include "shadowwidget.h"
@@ -22,6 +23,12 @@
 #include <QMouseEvent>
 #include <QLayout>
 #include <QGraphicsDropShadowEffect>
+#include <QDialog>
+#include <QWindow>
+#include <QMessageBox>
+#include "popupwidgetbutton.h"
+#include "mainwidget.h"
+#include "shadowwidget.h"
 
 class PopupTriangleWidget : public QWidget
 {
@@ -286,11 +293,16 @@ void PopupWidget::paintEvent(QPaintEvent *e)
 }
 
 QList<PopupWidget *> PopupWidgetButton::m_pWidgets;
-PopupWidgetButton::PopupWidgetButton(PWB::WidgetOrientation orien, QWidget *parent)
-    : QWidget(parent),
-      m_orien(orien),
-      m_mainWidgetClicked(false)
+PopupWidgetButton::PopupWidgetButton(PWB::WidgetOrientation orien, QWidget *rootWindow, QWidget *parent)
+    : QWidget(parent)
+    , m_orien(orien)
+    , m_mainWidgetClicked(false)
+    , m_pRootWindow(rootWindow)
 {
+    QList<QWidget *> topWidgets = qApp->topLevelWidgets();
+    if (!topWidgets.contains(rootWindow) || !qobject_cast<QWidget *>(rootWindow))
+        QMessageBox::critical(nullptr, tr("Warning!"), tr("The root window is not a topleavel window!"));
+
     qApp->installEventFilter(this);
     m_pButton = new QPushButton(this);
     m_pMainWidget = new PopupWidget(orien, this);
@@ -348,12 +360,11 @@ bool PopupWidgetButton::eventFilter(QObject *watched, QEvent *event)
         QMouseEvent *e = static_cast<QMouseEvent *>(event);
         QPoint buttonPoint = m_pButton->mapToGlobal(QPoint(0, 0));
         // 需要获取主窗口的坐标
-        QPoint ePoint = e->pos() + MainWidget::getMainWidgetPos();
+        QPoint ePoint = e->pos() + m_pRootWindow->mapToGlobal(QPoint(0, 0));
 
         /**
           * \warning
-          *  Qt5中的事件传递的第一层watched并不是我们自己的主窗体Widget类或者ButtonPopupWidget类，
-          *  而是它们的一个私有实现类QWidgetWindow，该类的objectName会自动加上“Window”
+          *  主窗口的事件先传递给它一个私有实现类QWidgetWindow，该类的objectName会自动加上“Window”
           */
         if (watched->objectName() == "MainWidgetWindow") {
             m_mainWidgetClicked = false;
@@ -373,7 +384,6 @@ bool PopupWidgetButton::eventFilter(QObject *watched, QEvent *event)
         if (!m_pMainWidget->isHidden() && !m_mainWidgetClicked) {
             emit OthersClicked();
         }
-
     }
     // 点击标题栏
     else if (event->type() == QEvent::NonClientAreaMouseButtonRelease ||
