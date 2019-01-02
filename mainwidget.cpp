@@ -16,7 +16,6 @@
 #include <QMoveEvent>
 #include <QDebug>
 
-QPoint MainWidget::m_pos;
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainWidget)

@@ -366,7 +366,7 @@ bool PopupWidgetButton::eventFilter(QObject *watched, QEvent *event)
           * \warning
           *  主窗口的事件先传递给它一个私有实现类QWidgetWindow，该类的objectName会自动加上“Window”
           */
-        if (watched->objectName() == "MainWidgetWindow") {
+        if (watched->objectName() == m_pRootWindow->objectName() + "Window") {
             m_mainWidgetClicked = false;
             // 点击按钮
             if (ePoint.x() >= buttonPoint.x() && ePoint.x() <= buttonPoint.x() + m_pButton->width()
